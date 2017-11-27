@@ -36,7 +36,18 @@ void multiple(term c[], term b[])
     row1_max = c[0].row;
     row2_max = b[0].row;
     term result[row1_max * row2_max];
+    
+    /* row * row : 第一個矩陣的的row隨著內層迴圈不段改變。去乘以第二個矩陣的row（第二個矩陣的row隨著外層迴圈改變）。
+       每一個實際要相乘的數字必須col的數字要相同。 每一個row * row 形成的數字，其次數最多不會超過第一個矩陣的行數（或第二個矩陣的行數，
+       即：num < c[0].col
+       
+       既然兩者的行數要一樣才能相乘就必須要用變數：x,y來控制。用temp去保存y的值。
+       首先Ｘ的值必須等於目前所在的row的值，才能進行運算。 小於時就不斷加到等於為止。 大於時不做事。
+       Ｙ的值也必須做限制。紀錄Ｙ每次遞增的次數（於amount_y中）當第二個矩陣的row > 目前的row，Ｙ必須要減掉amount_y；amount_y歸零。
+       
+    */
 
+    
     for(row2_var=0; row2_var<row2_max;row2_var++)
     {
         while( b[y].row!=row2_var)
@@ -147,7 +158,7 @@ int main()
     {
         if(ch=='|')
         {
-            k=1; //��L�ťթM����һݪ�����
+            k=1; //渡過空白和換行所需的次數
             //col[i]--;
             i++;
         }
